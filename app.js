@@ -28,6 +28,29 @@ const poloness = d=> scalePoloness(Math.pow(d.urbanPopulationRate/100,exaggerati
 
 const exaggeration = 1.1;
 
+showTooltip = d => {
+  const tooltipText = `${d.region}: ${d.growthRate}%`;
+  const tooltip = d3.select('body')
+      .append("div")
+
+  console.log (tooltip);
+  tooltip
+        .classed ('tooltip',true)
+        .text (tooltipText)
+        .style ("position", 'absolute')
+        .style ("left", xPos(d)+0+'px')
+        .style ("top", yPos(d)+0+'px')
+        // .attr("x", xPos(d)+12)
+        // .attr("y", yPos(d)+5)
+}
+
+
+removeTooltips = d => {
+  d3.select('body')
+      .selectAll(".tooltip")
+        .remove();
+}
+
 graph
     .attr ('width',width)
     .attr ('height',height)
@@ -45,19 +68,8 @@ plots.
       .attr ('stroke', invPlotColour)
       .attr ('stroke-width', poloness)
       .attr ('datum', d=> d.growthRate)
-      .on("mouseover", (d,i)=> {
-        const tooltipText = `${d.region}: ${d.growthRate}%`;
-        d3.select('svg')
-            .append("text")
-              .text(tooltipText)
-              .attr("x", xPos(d)+12)
-              .attr("y", yPos(d)+5);
-      })
-      .on("mouseout", ()=> {
-        d3.select('svg')
-            .selectAll("text")
-              .remove();
-      });
+      .on('mouseover', showTooltip)
+      .on('mouseout', removeTooltips);
 
 
 console.log ('plots:', plots);

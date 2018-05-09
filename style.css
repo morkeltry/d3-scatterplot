@@ -2,3 +2,11 @@ svg {
   margin: 0 auto;
   display: block;
 }
+
+.tooltip {
+  pointer-events : none;
+  font-family : 'Play', sans-serif;
+  background-color : beige;
+  border : 1px solid lightgrey;
+  padding : 2px;
+}
